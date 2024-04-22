@@ -1,0 +1,15 @@
+<h3>Step 1: Choose Your Model and Color</h3>
+Model:
+<select id="modelSelect" [(ngModel)]="selectedModel" (change)="setModel(selectedModel)"
+  *ngIf="teslaModelList !== undefined">
+  <option [ngValue]="undefined" selected>Choose Model</option>
+  <option *ngFor="let model of teslaModelList" [ngValue]="model">
+    {{ model.description }}
+  </option>
+</select>
+
+<select id="colorSelect" [(ngModel)]="selectedModelColors" (change)="setModelColor(selectedModelColors)" *ngIf="modelColorList !== undefined">
+  <option *ngFor="let model of modelColorList" [ngValue]="model">
+    {{ model.description }}
+  </option>
+</select>
