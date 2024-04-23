@@ -11,28 +11,32 @@ import { SharedDataService } from '../../services/shared-data.service';
   standalone: true,
   imports: [FormsModule, AsyncPipe, JsonPipe, NgFor, NgIf],
   templateUrl: './step1.component.html',
-  styleUrl: './step1.component.scss'
+  styleUrl: './step1.component.scss',
 })
 export class Step1Component {
-  selectedModel!:models;
-  teslaModelList: models[] | undefined;
+  selectedModel!: models;
+  teslaModelList$!: Observable<models[]>;
   modelColorList: modelColor[] | undefined;
   selectedModelColors!: modelColor;
 
-  constructor(private teslaService: TeslaModelService, private sharedData: SharedDataService) {
-
-  }
+  constructor(
+    private teslaService: TeslaModelService,
+    private sharedData: SharedDataService
+  ) {}
 
   ngOnInit() {
-    this.teslaService.getModels().subscribe((models: models[]) => {
-      this.teslaModelList = models;
-    });
+    this.teslaModelList$ = this.teslaService.getModels()
   }
 
-  setModel(model: models) {
-    this.sharedData.setTeslaModel(model, model.colors[0]);
-    this.modelColorList = model.colors;
-    this.selectedModelColors = model.colors[0];
+  setModel(model: models | undefined) {
+    if (model !== undefined) {
+      this.sharedData.setTeslaModel(model, model.colors[0]);
+      this.modelColorList = model.colors;
+      this.selectedModelColors = model.colors[0];
+    } else {
+      this.modelColorList = [];
+      this.sharedData.setTeslaModel();
+    }
   }
 
   setModelColor(color: any) {

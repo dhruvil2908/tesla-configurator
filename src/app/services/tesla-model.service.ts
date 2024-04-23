@@ -7,16 +7,15 @@ import { models } from '../models/teslaModels';
   providedIn: 'root'
 })
 export class TeslaModelService {
-
-  selectedOptionsData = signal([]);
-
   constructor(private http: HttpClient) { }
 
   getModels(): Observable<models[]> {
     return this.http.get<models[]>("models");
   }
 
-  getCurrentOptions(): Signal<any[]> {
-    return this.selectedOptionsData.asReadonly();
+  getConfigurations(modelCode: string) {
+    debugger
+    this.http.get('/options/'+modelCode).subscribe(console.log)
   }
+
 }

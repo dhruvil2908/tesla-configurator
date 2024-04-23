@@ -1,7 +1,7 @@
 import {Component, Signal, inject} from '@angular/core';
 import {AsyncPipe, JsonPipe, NgIf} from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { modelWithImage } from './models/teslaModels';
+import { TeslaOptions } from './models/teslaModels';
 import { SharedDataService } from './services/shared-data.service';
 
 @Component({
@@ -14,5 +14,5 @@ export class AppComponent {
   name = 'Angular';
   imageUrl: string = '';
   private sharedData = inject(SharedDataService);
-  protected currentModelWithImg: Signal<modelWithImage[]> = this.sharedData.getCurrentOptions();
+  protected currentModelWithImg: Signal<TeslaOptions> = this.sharedData.getCurrentOptions();
 }
