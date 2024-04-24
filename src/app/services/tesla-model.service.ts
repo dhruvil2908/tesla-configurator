@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, Signal, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { models } from '../models/teslaModels';
+import { Models, TeslaConfig } from '../models/teslaModels';
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +9,12 @@ import { models } from '../models/teslaModels';
 export class TeslaModelService {
   constructor(private http: HttpClient) { }
 
-  getModels(): Observable<models[]> {
-    return this.http.get<models[]>("models");
+  getModels(): Observable<Models[]> {
+    return this.http.get<Models[]>("models");
   }
 
-  getConfigurations(modelCode: string) {
-    debugger
-    this.http.get('/options/'+modelCode).subscribe(console.log)
+  getConfigurations(modelCode: string): Observable<TeslaConfig> {
+    return this.http.get<TeslaConfig>('/options/'+modelCode)
   }
 
 }

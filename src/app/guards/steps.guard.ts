@@ -8,7 +8,12 @@ export const stepsGuard: CanActivateFn = (route, state) => {
   const teslaModelDetails = sharedDataService.getCurrentOptions();
   const router = inject(Router);
 
-  if (state.url === '/step2' && teslaModelDetails().selectedModel === undefined) {
+  if (state.url.includes('/step2') && teslaModelDetails().selectedModel === undefined) {
+    router.navigate(['']);
+    return false;
+  }
+
+  if (state.url.includes('/step3') && (teslaModelDetails().selectedModel === undefined || teslaModelDetails().selectedConfig === undefined)) {
     router.navigate(['']);
     return false;
   }

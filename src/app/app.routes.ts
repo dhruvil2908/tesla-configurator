@@ -12,4 +12,9 @@ export const routes: Routes = [
     loadComponent: () => import('./steps/step2/step2.component').then(m => m.Step2Component),
     canActivate: [stepsGuard]
   },
+  {
+    path: 'step3',
+    loadComponent: () => import('./steps/step3/step3.component').then(m => m.Step3Component),
+    canActivate: [stepsGuard]
+  },
 ];

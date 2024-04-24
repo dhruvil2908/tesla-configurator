@@ -1,0 +1,74 @@
+<h1>Step 3: Summary</h1>
+<h3>Your Tesla {{ selectedTeslaData?.selectedModel?.description }}</h3>
+
+<div class="container">
+  <!-- car model details -->
+  <div class="row">
+    <div class="col-6">
+      <b>{{ selectedTeslaData?.selectedConfig?.description }}</b>
+      <p>Range: {{ selectedTeslaData?.selectedConfig?.range }} - Max Speed: {{ selectedTeslaData?.selectedConfig?.speed }}</p>
+    </div>
+    <div class="col-3">
+      {{selectedTeslaData?.selectedConfig?.price | currency }}
+    </div>
+  </div>
+  <br>
+
+  <!-- car color details -->
+  <div class="row">
+    <div class="col-6">
+      <b>{{selectedTeslaData?.selectedColor?.description }}</b>
+    </div>
+    <div class="col-3 ml-auto">
+      {{selectedTeslaData?.selectedColor?.price | currency }}
+    </div>
+  </div>
+  <br>
+
+  <!-- car options details -->
+  <div class="row">
+    <ng-template [ngIf]="selectedTeslaData?.includeTow">
+      <div class="col-6">
+        <b>Tow Hitch Package</b>
+      </div>
+      <div class="col-3">
+        {{1000 | currency }}
+      </div>
+    </ng-template>
+    <ng-template [ngIf]="selectedTeslaData?.includeYoke">
+      <div class="col-6">
+        <b>Yoke Steering Wheel</b>
+      </div>
+      <div class="col-3">
+        {{1000 | currency }}
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+<hr>
+<div class="row">
+  <div class="col-6">Total Cost</div>
+  <div class="col-6">
+    {{ (
+      (selectedTeslaData?.selectedColor?.price || 0)
+    + ((selectedTeslaData?.includeTow === true)?1000:0)
+    + ((selectedTeslaData?.includeYoke === true)?1000:0)
+    + (selectedTeslaData?.selectedConfig?.price || 0)
+    ) | currency }}
+  </div>
+</div>
+<hr>
+<!-- <div class="container">
+
+  <div class="row">
+    <hr class="col-sm-12">
+  </div>
+  <div class="row" *ngIf="selectedTeslaData?.selectedConfig">
+    <div class="col-sm-5">Total Cost</div>
+    <div class="col-sm-7">{{((selectedTeslaData?.selectedColor?.price || 0) + ((selectedTeslaData?.includeTow === true)?1000:0) + ((selectedTeslaData?.includeYoke === true)?1000:0) + (selectedTeslaData?.selectedConfig?.price || 0)) | currency }}</div>
+  </div>
+  <div class="row">
+    <hr class="col-sm-12">
+  </div>
+</div> -->

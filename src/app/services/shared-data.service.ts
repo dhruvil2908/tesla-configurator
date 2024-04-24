@@ -1,5 +1,5 @@
 import { Injectable, Signal, signal } from '@angular/core';
-import { TeslaOptions, modelColor, models } from '../models/teslaModels';
+import { TeslaOptions, ModelColor, Models, ConfigOptions } from '../models/teslaModels';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class SharedDataService {
    * @param model selected model detail or undefined
    * @param modelColor selected modelcolor or undefined
    */
-  setTeslaModel(model?: models, modelColor?: modelColor) {
+  setTeslaModel(model?: Models, modelColor?: ModelColor) {
     this.selectedOptionsData.selectedModel = model;
     this.selectedOptionsData.selectedColor = modelColor;
 
@@ -35,6 +35,21 @@ export class SharedDataService {
       } else {
         return {};
       }
+    });
+  }
+
+  setTeslaConfigs(config: ConfigOptions | undefined) {
+    this.teslaModelDetails.update((data) => {
+      data.selectedConfig = config;
+      return data;
+    });
+  }
+
+  setTeslaOptions(options: string) {
+    this.teslaModelDetails.update((data) => {
+      data.includeTow = (options === 'towHitch') ? true : false;
+      data.includeYoke = (options === 'yoke') ? true : false;
+      return data;
     });
   }
 }
