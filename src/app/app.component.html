@@ -1,9 +1,9 @@
 <div class="row">
-  <button id="step1" class="btn btn-dark col-4 border-1 border-light rounded-0" routerLink="">Step 1</button>
-  <button id="step2" class="btn btn-dark col-4 border-1 border-light rounded-0"
+  <button id="step1" routerLink="">Step 1</button>
+  <button id="step2"
     [routerLink]="'step2/' + currentModelWithImg().selectedModel?.code"
     [disabled]="currentModelWithImg().selectedModel === undefined">Step 2</button>
-  <button id="step3" class="btn btn-dark col-4 border-1 border-light rounded-0" [routerLink]="'step3'"
+  <button id="step3" [routerLink]="'step3'"
     [disabled]="currentModelWithImg().selectedModel === undefined || currentModelWithImg().selectedConfig === undefined">Step 3</button>
 </div>
 <router-outlet></router-outlet>

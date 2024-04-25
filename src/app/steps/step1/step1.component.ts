@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TeslaModelService } from '../../services/tesla-model.service';
-import { AsyncPipe, JsonPipe, NgFor, NgIf } from '@angular/common';
-import { Observable } from 'rxjs';
+import { CommonModule } from '@angular/common';
 import { ModelColor, Models } from '../../models/teslaModels';
 import { SharedDataService } from '../../services/shared-data.service';
 
 @Component({
   selector: 'app-step1',
   standalone: true,
-  imports: [FormsModule, AsyncPipe, JsonPipe, NgFor, NgIf],
+  imports: [FormsModule, CommonModule],
   templateUrl: './step1.component.html',
   styleUrl: './step1.component.scss',
 })
@@ -25,15 +24,19 @@ export class Step1Component {
   ) { }
 
   ngOnInit() {
-    this.teslaService.getModels().subscribe((Model: Models[]) => {
-      this.teslaModelList = Model;
+    this.teslaService.getModels().subscribe({
+      next: (Model: Models[]) => {
+        this.teslaModelList = Model;
 
-      let sharedSignal = this.sharedData.getCurrentOptions();
-      let signalData = sharedSignal();
-      this.modelColorList = signalData.selectedModel?.colors || [];
+        let sharedSignal = this.sharedData.getCurrentOptions();
+        this.modelColorList = sharedSignal().selectedModel?.colors || [];
 
-      this.selectedModel = this.teslaModelList.find(model => model.code === signalData.selectedModel?.code);
-      this.selectedModelColors = signalData.selectedColor;
+        this.selectedModel = this.teslaModelList.find(model => model.code === sharedSignal().selectedModel?.code);
+        this.selectedModelColors = sharedSignal().selectedColor;
+      },
+      error: (error) => {
+        console.error(error);
+      }
     })
   }
 

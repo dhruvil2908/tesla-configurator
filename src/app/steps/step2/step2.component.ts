@@ -1,4 +1,4 @@
-import { Component, Input, Signal } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TeslaModelService } from '../../services/tesla-model.service';
 import { ConfigOptions, TeslaOptions } from '../../models/teslaModels';
 import { CommonModule } from '@angular/common';
@@ -27,13 +27,18 @@ export class Step2Component {
     this.selectedOptions.includeTow = signalData().includeTow;
     this.selectedOptions.includeYoke = signalData().includeYoke;
 
-    this.teslaModelService.getConfigurations(this.model).subscribe((modelData) => {
-      if (modelData !== null) {
-        this.configs = modelData.configs;
-        this.includeYoke = modelData.yoke;
-        this.includeTow = modelData.towHitch;
+    this.teslaModelService.getConfigurations(this.model).subscribe({
+      next: (modelData) => {
+        if (modelData !== null) {
+          this.configs = modelData.configs;
+          this.includeYoke = modelData.yoke;
+          this.includeTow = modelData.towHitch;
 
-        this.selectedConfig = this.configs.find(config => config.id === signalData().selectedConfig?.id);
+          this.selectedConfig = this.configs.find(config => config.id === signalData().selectedConfig?.id);
+        }
+      },
+      error: (err) => {
+        console.error(err);
       }
     });
   }

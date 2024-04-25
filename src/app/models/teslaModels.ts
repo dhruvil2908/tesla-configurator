@@ -10,11 +10,6 @@ export interface ModelColor {
   price: number
 }
 
-export interface ModelWithImage {
-  modelCode: string;
-  modelImage: string;
-}
-
 export interface TeslaOptions{
   selectedModel?: Models;
   selectedColor?: ModelColor;

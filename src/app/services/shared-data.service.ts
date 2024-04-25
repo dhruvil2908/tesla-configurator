@@ -25,7 +25,7 @@ export class SharedDataService {
     this.selectedOptionsData.selectedModel = model;
     this.selectedOptionsData.selectedColor = modelColor;
 
-    this.teslaModelDetails.update((data) => {
+    this.teslaModelDetails.update(() => {
       if (model !== undefined && modelColor !== undefined) {
         return {
           selectedModel: model,
@@ -47,8 +47,12 @@ export class SharedDataService {
 
   setTeslaOptions(options: string) {
     this.teslaModelDetails.update((data) => {
-      data.includeTow = (options === 'towHitch') ? true : false;
-      data.includeYoke = (options === 'yoke') ? true : false;
+      if (options === 'towHitch') {
+        data.includeTow = true;
+      }
+      if (options === 'yoke') {
+        data.includeYoke = true
+      }
       return data;
     });
   }
